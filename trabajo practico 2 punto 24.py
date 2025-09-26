@@ -1,59 +1,90 @@
 
-class PersonajeMCU:
-    def __init__(self, nombre, cantidad_peliculas):
-        self.nombre = nombre
-        self.cantidad_peliculas = cantidad_peliculas
 
-    def __str__(self):
-        return f"{self.nombre} - {self.cantidad_peliculas} películas"
-
-
-pila = []
+def crear_personaje(nombre, cant_peliculas):
+    return {
+        "nombre": nombre,
+        "peliculas": cant_peliculas
+    }
 
 
-pila.append(PersonajeMCU("Iron Man", 10))
-pila.append(PersonajeMCU("Captain America", 9))
-pila.append(PersonajeMCU("Thor", 9))
-pila.append(PersonajeMCU("Black Widow", 8))
-pila.append(PersonajeMCU("Hawkeye", 6))
-pila.append(PersonajeMCU("Hulk", 7))
-pila.append(PersonajeMCU("Rocket Raccoon", 4))
-pila.append(PersonajeMCU("Groot", 5))
-pila.append(PersonajeMCU("Doctor Strange", 4))
-pila.append(PersonajeMCU("Gamora", 5))
-pila.append(PersonajeMCU("Star-Lord", 4))
-pila.append(PersonajeMCU("Spider-Man", 3))
-pila.append(PersonajeMCU("Captain Marvel", 3))
+pila_personajes = Stack()
+pila_personajes.push(crear_personaje("Iron Man", 10))
+pila_personajes.push(crear_personaje("Captain America", 9))
+pila_personajes.push(crear_personaje("Thor", 9))
+pila_personajes.push(crear_personaje("Black Widow", 8))
+pila_personajes.push(crear_personaje("Hawkeye", 5))
+pila_personajes.push(crear_personaje("Rocket Raccoon", 4))
+pila_personajes.push(crear_personaje("Groot", 4))
+pila_personajes.push(crear_personaje("Doctor Strange", 5))
+pila_personajes.push(crear_personaje("Captain Marvel", 2))
+pila_personajes.push(crear_personaje("Gamora", 4))
 
 
-print("a. Posición desde la cima:")
-posicion = 1
-for personaje in reversed(pila):  # cima está al final, por eso se recorre al revés
-    if personaje.nombre == "Rocket Raccoon":
-        print(f"- Rocket Raccoon está en la posición {posicion}")
-    if personaje.nombre == "Groot":
-        print(f"- Groot está en la posición {posicion}")
-    posicion += 1
+def buscar_posiciones(pila, nombres):
+    aux = Stack()
+    posiciones = {}
+    pos = 1
+    while pila.size() > 0:
+        personaje = pila.pop()
+        if personaje["nombre"] in nombres:
+            posiciones[personaje["nombre"]] = pos
+        aux.push(personaje)
+        pos += 1
+   
+    while aux.size() > 0:
+        pila.push(aux.pop())
+    return posiciones
 
 
-print("\nb. Personajes que participaron en más de 5 películas:")
-for personaje in reversed(pila):
-    if personaje.cantidad_peliculas > 5:
-        print(f"- {personaje.nombre}: {personaje.cantidad_peliculas} películas")
+def mas_de_cinco(pila):
+    aux = Stack()
+    print("Personajes con más de 5 películas:")
+    while pila.size() > 0:
+        personaje = pila.pop()
+        if personaje["peliculas"] > 5:
+            print(f"{personaje['nombre']} - {personaje['peliculas']} películas")
+        aux.push(personaje)
+    while aux.size() > 0:
+        pila.push(aux.pop())
 
 
-print("\nc. Cantidad de películas de Black Widow:")
-encontrado = False
-for personaje in reversed(pila):
-    if personaje.nombre == "Black Widow":
-        print(f"- Black Widow participó en {personaje.cantidad_peliculas} películas")
-        encontrado = True
-        break
-if not encontrado:
-    print("- Black Widow no se encuentra en la pila")
+def peliculas_black_widow(pila):
+    aux = Stack()
+    cantidad = None
+    while pila.size() > 0:
+        personaje = pila.pop()
+        if personaje["nombre"] == "Black Widow":
+            cantidad = personaje["peliculas"]
+        aux.push(personaje)
+    while aux.size() > 0:
+        pila.push(aux.pop())
+    if cantidad is not None:
+        print("Black Widow participó en", cantidad, "películas")
+    else:
+        print("Black Widow no está en la pila.")
 
 
-print("\nd. Personajes cuyos nombres empiezan con C, D o G:")
-for personaje in reversed(pila):
-    if personaje.nombre.startswith(("C", "D", "G")):
-        print(f"- {personaje.nombre}")
+def personajes_iniciales(pila, letras):
+    aux = Stack()
+    print(f"Personajes cuyos nombres empiezan con {', '.join(letras)}:")
+    while pila.size() > 0:
+        personaje = pila.pop()
+        if personaje["nombre"][0] in letras:
+            print(personaje["nombre"])
+        aux.push(personaje)
+    while aux.size() > 0:
+        pila.push(aux.pop())
+
+
+
+posiciones = buscar_posiciones(pila_personajes, ["Rocket Raccoon", "Groot"])
+print("Posiciones de Rocket y Groot:", posiciones)
+print()
+
+mas_de_cinco(pila_personajes)
+print()
+
+peliculas_black_widow(pila_personajes)
+print()
+
+personajes_iniciales(pila_personajes, ["C", "D", "G"])
