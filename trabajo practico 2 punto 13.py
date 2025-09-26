@@ -1,75 +1,102 @@
 
-class TrajeIronMan:
-    def __init__(self, modelo, pelicula, estado):
-        self.modelo = modelo
-        self.pelicula = pelicula
-        self.estado = estado
-
-    def str(self):
-        return f"{self.modelo} - {self.pelicula} - {self.estado}"
+from stack import Stack
 
 
-pila = []
+def crear_traje(modelo, pelicula, estado):
+    return {
+        "modelo": modelo,
+        "pelicula": pelicula,
+        "estado": estado
+    }
 
 
-pila.append(TrajeIronMan("Mark III", "Iron Man", "Dañado"))
-pila.append(TrajeIronMan("Mark V", "Iron Man 2", "Impecable"))
-pila.append(TrajeIronMan("Mark XLIV", "Avengers: Age of Ultron", "Dañado"))
-pila.append(TrajeIronMan("Mark XLVII", "Spider-Man: Homecoming", "Destruido"))
-pila.append(TrajeIronMan("Mark XLVI", "Capitan America: Civil War", "Dañado"))
-pila.append(TrajeIronMan("Mark L", "Avengers: Infinity War", "Destruido"))
+pila_trajes = Stack()
+pila_trajes.push(crear_traje("Mark III", "Iron Man", "Dañado"))
+pila_trajes.push(crear_traje("Mark XLIV", "Avengers: Age of Ultron", "Impecable"))  # Hulkbuster
+pila_trajes.push(crear_traje("Mark XLVII", "Spider-Man: Homecoming", "Dañado"))
+pila_trajes.push(crear_traje("Mark XLVI", "Capitan America: Civil War", "Destruido"))
+pila_trajes.push(crear_traje("Mark L", "Avengers: Infinity War", "Impecable"))
 
 
-import copy
-pila_original = copy.deepcopy(pila)
+def buscar_hulkbuster(pila):
+    aux = Stack()
+    encontrado = False
+    while pila.size() > 0:
+        traje = pila.pop()
+        if traje["modelo"] == "Mark XLIV":
+            print(f"El modelo Hulkbuster fue usado en: {traje['pelicula']}")
+            encontrado = True
+        aux.push(traje)
+    
+  
+    while aux.size() > 0:
+        pila.push(aux.pop())
+    if not encontrado:
+        print("El modelo Hulkbuster no fue encontrado.")
 
 
-print("a. Películas donde se usó el modelo Mark XLIV (Hulkbuster):")
-encontrado = False
-for traje in reversed(pila):
-    if traje.modelo == "Mark XLIV":
-        print(f"- {traje.pelicula}")
-        encontrado = True
-if not encontrado:
-    print("No se usó el modelo Mark XLIV.")
+def mostrar_dañados(pila):
+    aux = Stack()
+    print("Modelos dañados:")
+    while pila.size() > 0:
+        traje = pila.pop()
+        if traje["estado"] == "Dañado":
+            print(traje["modelo"], "-", traje["pelicula"])
+        aux.push(traje)
+    while aux.size() > 0:
+        pila.push(aux.pop())
+
+# c) Eliminar los destruidos
+def eliminar_destruidos(pila):
+    aux = Stack()
+    print("Eliminando modelos destruidos:")
+    while pila.size() > 0:
+        traje = pila.pop()
+        if traje["estado"] == "Destruido":
+            print("Eliminado:", traje["modelo"], "-", traje["pelicula"])
+        else:
+            aux.push(traje)
+    while aux.size() > 0:
+        pila.push(aux.pop())
 
 
-print("\nb. Modelos que quedaron dañados:")
-for traje in reversed(pila):
-    if traje.estado == "Dañado":
-        print(f"- {traje.modelo} ({traje.pelicula})")
-
-
-print("\nc. Modelos destruidos eliminados:")
-pila_aux = []
-while pila:
-    traje = pila.pop()
-    if traje.estado == "Destruido":
-        print(f"- {traje.modelo} ({traje.pelicula})")
+def agregar_mark_lxxxv(pila, pelicula):
+    aux = Stack()
+    repetido = False
+    while pila.size() > 0:
+        traje = pila.pop()
+        if traje["modelo"] == "Mark LXXXV" and traje["pelicula"] == pelicula:
+            repetido = True
+        aux.push(traje)
+    while aux.size() > 0:
+        pila.push(aux.pop())
+    if not repetido:
+        pila.push(crear_traje("Mark LXXXV", pelicula, "Impecable"))
+        print("Mark LXXXV agregado en", pelicula)
     else:
-        pila_aux.append(traje)
-
-while pila_aux:
-    pila.append(pila_aux.pop())
+        print("Mark LXXXV ya estaba en esa película.")
 
 
+def mostrar_trajes_peliculas(pila, peliculas):
+    aux = Stack()
+    print(f"Trajes usados en {peliculas}:")
+    while pila.size() > 0:
+        traje = pila.pop()
+        if traje["pelicula"] in peliculas:
+            print(traje["modelo"], "-", traje["pelicula"])
+        aux.push(traje)
+    while aux.size() > 0:
+        pila.push(aux.pop())
 
 
-print("\ne. Agregando modelo Mark LXXXV:")
-pelicula_nueva = "Avengers: Endgame"
-modelo_nuevo = "Mark LXXXV"
-repetido = any(t.modelo == modelo_nuevo and t.pelicula == pelicula_nueva for t in pila)
-if not repetido:
-    pila.append(TrajeIronMan(modelo_nuevo, pelicula_nueva, "Impecable"))
-    print("Modelo agregado correctamente.")
-else:
-    print("Ya existe ese modelo en esa película, no se agrega.")
 
 
-print("\nf. Trajes utilizados en:")
-peliculas_consulta = ["Spider-Man: Homecoming", "Capitan America: Civil War"]
-for pelicula in peliculas_consulta:
-    print(f"- {pelicula}:")
-    for traje in reversed(pila):
-        if traje.pelicula == pelicula:
-            print(f"  * {traje.modelo}")
+buscar_hulkbuster(pila_trajes)
+print()
+mostrar_dañados(pila_trajes)
+print()
+eliminar_destruidos(pila_trajes)
+print()
+agregar_mark_lxxxv(pila_trajes, "Avengers: Endgame")
+print()
+mostrar_trajes_peliculas(pila_trajes, ["Spider-Man: Homecoming", "Capitan America: Civil War"])
