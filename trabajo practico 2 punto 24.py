@@ -1,4 +1,4 @@
-
+from stack import Stack
 
 def crear_personaje(nombre, cant_peliculas):
     return {
@@ -88,3 +88,4 @@ peliculas_black_widow(pila_personajes)
 print()
 
 personajes_iniciales(pila_personajes, ["C", "D", "G"])
+
