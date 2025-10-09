@@ -1,4 +1,5 @@
-
+from queue_ import Queue
+from stack import Stack
 
 def personaje_capitana_marvel(c: Queue) -> str:
     for _ in range(c.size()):
@@ -68,3 +69,4 @@ if __name__ == "__main__":
     comienzan_con_s(cola)
 
     print("f)", carol_danvers(cola))
+
