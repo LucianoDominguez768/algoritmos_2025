@@ -1,72 +1,107 @@
+""" 
+    Se tienen una cola con personajes de Marvel Cinematic Universe (MCU), de los cuales se conoce el nombre del personaje, el nombre del superhéroe y su género 
+    (Masculino M y FemeninoF), por ejemplo {Tony Stark, Iron Man, M}, {Steve Rogers, Capitán América, M}, {Natasha Romanoff, Black Widow, F}, etc., 
+    desarrollar un algoritmo que resuelva las siguientes actividades:
+    a. determinar el nombre del personaje de la superhéroe Capitana Marvel;
+    b. mostrar los nombre de los superhéroes femeninos;
+    c. mostrar los nombres de los personajes masculinos;
+    d. determinar el nombre del superhéroe del personaje Scott Lang;
+    e. mostrar todos datos de los superhéroes o personaje cuyos nombres comienzan con la letra S;
+    f. determinar si el personaje Carol Danvers se encuentra en la cola e indicar su nombre de superhéroes.
+"""
+
 from queue_ import Queue
-from stack import Stack
 
-def personaje_capitana_marvel(c: Queue) -> str:
-    for _ in range(c.size()):
-        dato = c.move_to_end()
-        if dato["superheroe"] == "Capitana Marvel":
-            return dato["personaje"]
-    return "No encontrado"
+queue = Queue()
 
+queue.arrive({"name": "Tony Stark", "superhero": "Iron Man", "gender": "M"})
+queue.arrive({"name": "Steve Rogers", "superhero": "Capitán América", "gender": "M"})
+queue.arrive({"name": "Natasha Romanoff", "superhero": "Black Widow", "gender": "F"})
+queue.arrive({"name": "Carol Danvers", "superhero": "Capitana Marvel", "gender": "F"})
+queue.arrive({"name": "Scott Lang", "superhero": "Ant-Man", "gender": "M"})
+queue.arrive({"name": "Bruce Banner", "superhero": "Hulk", "gender": "M"})
+queue.arrive({"name": "Clint Barton", "superhero": "Hawkeye", "gender": "M"})
+queue.arrive({"name": "Wanda Maximoff", "superhero": "Scarlet Witch", "gender": "F"})
 
-def superheroes_femeninos(c: Queue) -> None:
-    for _ in range(c.size()):
-        dato = c.move_to_end()
-        if dato["genero"] == "F":
-            print(dato["superheroe"])
+#A
+def identify_caharacter(queue: Queue, name):
+    
+    for i in range(queue.size()):
+        charater = queue.attention()
+        
+        if charater["superhero"] == name:
+            char = charater["name"]
+    
+        queue.arrive(charater)
+    return char
 
+print('A)Nombre de capitana Marvel:')
+print(identify_caharacter(queue, "Capitana Marvel"))
 
-def personajes_masculinos(c: Queue) -> None:
-    for _ in range(c.size()):
-        dato = c.move_to_end()
-        if dato["genero"] == "M":
-            print(dato["personaje"])
+#B
+def identify_names_F(queue: Queue):
+    for i in range(queue.size()):
+        char = queue.attention()
+        if char["gender"] == "F":
+            print(f'{char["name"]} - {char["superhero"]} ')
+               
+        queue.arrive(char)
+        
+print("B)Nombres femeninos: ")
+identify_names_F(queue)
+            
+#C
+def identify_names_M(queue: Queue):
+    
+    for i in range(queue.size()):
+        char = queue.attention()
+        if char["gender"] == "M":
+            print(f'{char["name"]} - {char["superhero"]} ')
+               
+        queue.arrive(char)
 
+print("C) Nombres Masculinos: ")
+identify_names_M(queue)
 
-def superheroe_scott_lang(c: Queue) -> str:
-    for _ in range(c.size()):
-        dato = c.move_to_end()
-        if dato["personaje"] == "Scott Lang":
-            return dato["superheroe"]
-    return "No encontrado"
+#D
+def serch_scott_lang(queue: Queue):
+    for i in range(queue.size()):
+        char = queue.attention()
+        if char["name"] == "Scott Lang":
+            print(f'{char["name"]} es: {char["superhero"]}')
+            
+        queue.arrive(char)
+        
+print('D) Buscar a Scott Lang en la cola')
+serch_scott_lang(queue)
 
+#E
+def superhero_with_s(queue: Queue):
+    new_queue = Queue()
+    
+    for i in range(queue.size()):
+        char = queue.attention()
+        
+        if char["name"][0] == 'S' or char["superhero"][0] == "S":
+            new_queue.arrive(char)
+            
+        queue.arrive(char)
+        
+    return new_queue
 
-def comienzan_con_s(c: Queue) -> None:
-    for _ in range(c.size()):
-        dato = c.move_to_end()
-        if dato["personaje"].startswith("S") or dato["superheroe"].startswith("S"):
-            print(dato)
+print('E) Nombre o superheroes que comienzan con "S" ')
+superhero_with_s(queue).show()
 
-
-def carol_danvers(c: Queue) -> str:
-    for _ in range(c.size()):
-        dato = c.move_to_end()
-        if dato["personaje"] == "Carol Danvers":
-            return f"Está en la cola, su superhéroe es {dato['superheroe']}"
-    return "Carol Danvers no se encuentra en la cola"
-
-
-
-if __name__ == "__main__":
-    cola = Queue()
-    cola.arrive({"personaje": "Tony Stark", "superheroe": "Iron Man", "genero": "M"})
-    cola.arrive({"personaje": "Steve Rogers", "superheroe": "Capitán América", "genero": "M"})
-    cola.arrive({"personaje": "Natasha Romanoff", "superheroe": "Black Widow", "genero": "F"})
-    cola.arrive({"personaje": "Carol Danvers", "superheroe": "Capitana Marvel", "genero": "F"})
-    cola.arrive({"personaje": "Scott Lang", "superheroe": "Ant-Man", "genero": "M"})
-    cola.arrive({"personaje": "Sam Wilson", "superheroe": "Falcon", "genero": "M"})
-
-    print("a)", personaje_capitana_marvel(cola))
-    print("b) Superhéroes femeninos:")
-    superheroes_femeninos(cola)
-
-    print("c) Personajes masculinos:")
-    personajes_masculinos(cola)
-
-    print("d)", superheroe_scott_lang(cola))
-
-    print("e) Comienzan con S:")
-    comienzan_con_s(cola)
-
-    print("f)", carol_danvers(cola))
+#F
+def serch_character(queue: Queue,name):
+    for i in range (queue.size()):
+        char = queue.attention()
+        
+        if char["name"] == name:
+            print(f'{name} esta en la cola y es {char["superhero"]}')
+            
+        queue.arrive(char)
+        
+print('F) Identificar si Carol Danvers esta en la cola')
+serch_character(queue,'Carol Danvers')
 
