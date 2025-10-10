@@ -1,55 +1,75 @@
 
 
+"""10. Dada una cola con las notificaciones de las aplicaciones de redes sociales de un Smartphone,
+de las cual se cuenta con la hora de la notificación, la aplicación que la emitió y el mensaje,
+resolver las siguientes actividades:
+a. escribir una función que elimine de la cola todas las notificaciones de Facebook;
+b. escribir una función que muestre todas las notificaciones de Twitter, cuyo mensaje incluya
+la palabra "Python", si perder datos en la cola;
+c. utilizar una pila para almacenar temporáneamente las notificaciones producidas entre las
+11:43 y las 15:57, y determinar cuántas son."""
+
 from queue_ import Queue
 from stack import Stack
 
+queue = Queue()
 
-def eliminar_facebook(c: Queue) -> None:
-    aux = Queue()
-    while c.size() > 0:
-        notif = c.attention()
-        if notif["app"] != "Facebook":
-            aux.arrive(notif)
-  
-    while aux.size() > 0:
-        c.arrive(aux.attention())
+queue.arrive({"hour": "10:30", "app": "Facebook", "message": "Nuevo comentario"})
+queue.arrive({"hour": "11:00", "app": "Twitter", "message": "Aprendiendo Java!"})
+queue.arrive({"hour": "12:00", "app": "Facebook", "message": "Nuevo like"})
+queue.arrive({"hour": "13:00", "app": "Twitter", "message": "Python es increíble"})
+queue.arrive({"hour": "14:00", "app": "Instagram", "message": "Nueva foto publicada"})
+queue.arrive({"hour": "15:00", "app": "Facebook", "message": "Nuevo mensaje privado"})
 
+#A)
+def del_facebook(queue: Queue):
+    
+    for i in range(queue.size()):
+        
+        noti = queue.attention()
+        if noti["app"] != "Facebook":
+           queue.arrive(noti)
+           
+    return queue
 
-def mostrar_twitter_python(c: Queue) -> None:
-    for _ in range(c.size()):
-        notif = c.move_to_end()
-        if notif["app"] == "Twitter" and "Python" in notif["mensaje"]:
-            print(notif)
+#B)
+def twitter(queue):
+    aux_queue = Queue()
+    word = 'Python'
+    
+    while queue.size() > 0:
+        noti = queue.attention()
+        
+        if noti["app"] == 'Twitter' and word in noti["message"]:
+           print(noti)
+        
+        aux_queue.arrive(noti)
+        
+    while aux_queue.size() > 0:
+        queue.arrive(aux_queue.attention())
 
+#C)
+def hour_messages(queue: Queue):
+    stack = Stack()
+    cont = 0
+    
+    while queue.size() > 0:
+        noti = queue.attention()
+        
+        if noti["hour"] >= "11:43" and noti["hour"] <= "15:57":
+            stack.push(noti)
+            cont += 1
+    
+    while stack.size() > 0:
+        queue.arrive(stack.pop())
+    
+    return cont
 
-def contar_intervalo(c: Queue, inicio="11:43", fin="15:57") -> int:
-    pila = Stack()
-    contador = 0
-    for _ in range(c.size()):
-        notif = c.move_to_end()
-        if inicio <= notif["hora"] <= fin:
-            pila.push(notif)
-            contador += 1
-    return contador
+print("a) ")
+del_facebook(queue).show()
 
+print("b) ")
+twitter(queue)
 
-if __name__ == "__main__":
-    cola = Queue()
-    cola.arrive({"hora": "10:15", "app": "Facebook", "mensaje": "Hola"})
-    cola.arrive({"hora": "12:00", "app": "Twitter", "mensaje": "Aprendiendo Python"})
-    cola.arrive({"hora": "14:30", "app": "Instagram", "mensaje": "Nueva foto"})
-    cola.arrive({"hora": "16:00", "app": "Twitter", "mensaje": "Otro tweet"})
-    cola.arrive({"hora": "13:20", "app": "Twitter", "mensaje": "Python es genial!"})
+print(f"c) Notificaciones producidas entre las 11:43 y las 15:57: {hour_messages(queue)}")
 
-    print("Cola inicial:")
-    cola.show()
-
-    print("Eliminar Facebook:")
-    eliminar_facebook(cola)
-    cola.show()
-
-    print("Notificaciones de Twitter con 'Python':")
-    mostrar_twitter_python(cola)
-
-    print("Cantidad de notificaciones entre 11:43 y 15:57:")
-    print(contar_intervalo(cola))
