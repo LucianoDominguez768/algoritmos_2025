@@ -1,7 +1,7 @@
 
 from stack import Stack
 
-
+#definimos traje
 def crear_traje(modelo, pelicula, estado):
     return {
         "modelo": modelo,
@@ -9,7 +9,7 @@ def crear_traje(modelo, pelicula, estado):
         "estado": estado
     }
 
-
+# cargamos la pila
 pila_trajes = Stack()
 pila_trajes.push(crear_traje("Mark III", "Iron Man", "Dañado"))
 pila_trajes.push(crear_traje("Mark XLIV", "Avengers: Age of Ultron", "Impecable")) 
@@ -17,7 +17,7 @@ pila_trajes.push(crear_traje("Mark XLVII", "Spider-Man: Homecoming", "Dañado"))
 pila_trajes.push(crear_traje("Mark XLVI", "Capitan America: Civil War", "Destruido"))
 pila_trajes.push(crear_traje("Mark L", "Avengers: Infinity War", "Impecable"))
 
-
+# a) Verificar si el modelo Hulkbuster aparece y mostrar sus películas
 def buscar_hulkbuster(pila):
     aux = Stack()
     encontrado = False
@@ -28,13 +28,13 @@ def buscar_hulkbuster(pila):
             encontrado = True
         aux.push(traje)
     
-   
+   # Aca se restaura la pila
     while aux.size() > 0:
         pila.push(aux.pop())
     if not encontrado:
         print("El modelo Hulkbuster no fue encontrado.")
 
-
+# b) Mostrar los modelos dañados
 def mostrar_dañados(pila):
     aux = Stack()
     print("Modelos dañados:")
@@ -46,7 +46,7 @@ def mostrar_dañados(pila):
     while aux.size() > 0:
         pila.push(aux.pop())
 
-
+# c) Eliminar los destruidos
 def eliminar_destruidos(pila):
     aux = Stack()
     print("Eliminando modelos destruidos:")
@@ -59,7 +59,7 @@ def eliminar_destruidos(pila):
     while aux.size() > 0:
         pila.push(aux.pop())
 
-
+# e) Agregar Mark LXXXV si no está en la misma película
 def agregar_mark_lxxxv(pila, pelicula):
     aux = Stack()
     repetido = False
@@ -76,7 +76,7 @@ def agregar_mark_lxxxv(pila, pelicula):
     else:
         print("Mark LXXXV ya estaba en esa película.")
 
-
+# f) Mostrar trajes de dos películas específicas
 def mostrar_trajes_peliculas(pila, peliculas):
     aux = Stack()
     print(f"Trajes usados en {peliculas}:")
@@ -90,7 +90,7 @@ def mostrar_trajes_peliculas(pila, peliculas):
 
 
 
-
+# Ejecución
 buscar_hulkbuster(pila_trajes)
 print()
 mostrar_dañados(pila_trajes)
@@ -100,4 +100,5 @@ print()
 agregar_mark_lxxxv(pila_trajes, "Avengers: Endgame")
 print()
 mostrar_trajes_peliculas(pila_trajes, ["Spider-Man: Homecoming", "Capitan America: Civil War"])
+
 
