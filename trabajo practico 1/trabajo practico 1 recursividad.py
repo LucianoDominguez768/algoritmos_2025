@@ -63,3 +63,6 @@ def usar_la_fuerza(mochila, objetos_sacados=0):
        
         return usar_la_fuerza(mochila, objetos_sacados)
 
+mochila_jedi = ["comunicador", "botas", "comida", "sable de luz"]
+
+usar_la_fuerza(mochila_jedi)
