@@ -75,21 +75,23 @@ def eliminar_destruidos(pila):
         pila.push(aux.pop())
 
 # e) Agregar Mark LXXXV si no está en la misma película
-def agregar_mark_lxxxv(pila, pelicula):
+def agregar_mark_lxxxv(pila, modelo, pelicula, estado):
     aux = Stack()
     repetido = False
     while pila.size() > 0:
         traje = pila.pop()
-        if traje["modelo"] == "Mark LXXXV" and traje["pelicula"] == pelicula:
+        if traje["modelo"] == modelo and traje["pelicula"] == pelicula:
+            print('Este traje ya se encuantra con esas especificaciones')
             repetido = True
-        aux.push(traje)
+            aux.push(traje)
+          
+        
     while aux.size() > 0:
         pila.push(aux.pop())
     if not repetido:
-        pila.push(crear_traje("Mark LXXXV", pelicula, "Impecable"))
-        print("Mark LXXXV agregado en", pelicula)
-    else:
-        print("Mark LXXXV ya estaba en esa película.")
+       
+        pila.push(crear_traje(modelo, pelicula, estado))
+        print("El traje se agrego a la pila")
 
 # f) Mostrar trajes de dos películas específicas
 def mostrar_trajes_peliculas(pila, peliculas):
@@ -115,6 +117,7 @@ print()
 agregar_mark_lxxxv(pila_trajes, "Avengers: Endgame")
 print()
 mostrar_trajes_peliculas(pila_trajes, ["Spider-Man: Homecoming", "Capitan America: Civil War"])
+
 
 
 
