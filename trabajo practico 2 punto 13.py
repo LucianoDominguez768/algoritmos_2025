@@ -114,9 +114,10 @@ mostrar_dañados(pila_trajes)
 print()
 eliminar_destruidos(pila_trajes)
 print()
-agregar_mark_lxxxv(pila_trajes, "Avengers: Endgame")
+agregar_mark_lxxxv(pila_trajes,"Mark L", "Avengers: Infinity War","impecable")
 print()
 mostrar_trajes_peliculas(pila_trajes, ["Spider-Man: Homecoming", "Capitan America: Civil War"])
+
 
 
 
