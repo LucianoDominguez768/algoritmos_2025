@@ -78,7 +78,7 @@ def peliculas_black_widow(pila):
 # d) Mostrar personajes cuyos nombres empiezan con C, D o G
 def personajes_iniciales(pila, letras):
     aux = Stack()
-    print(f"Personajes cuyos nombres empiezan con {', '.join(letras)}:")
+    print(f"Personajes cuyos nombres empiezan con C, D o G")
     while pila.size() > 0:
         personaje = pila.pop()
         if personaje["nombre"][0] in letras:
@@ -100,5 +100,6 @@ peliculas_black_widow(pila_personajes)
 print()
 
 personajes_iniciales(pila_personajes, ["C", "D", "G"])
+
 
 
