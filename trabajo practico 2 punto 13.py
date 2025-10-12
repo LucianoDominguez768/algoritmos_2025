@@ -74,7 +74,7 @@ def eliminar_destruidos(pila):
     while aux.size() > 0:
         pila.push(aux.pop())
 
-# e) Agregar Mark LXXXV si no está en la misma película
+# e) que no se repitan
 def agregar_mark_lxxxv(pila, modelo, pelicula, estado):
     aux = Stack()
     repetido = False
@@ -117,6 +117,7 @@ print()
 agregar_mark_lxxxv(pila_trajes, "Avengers: Endgame")
 print()
 mostrar_trajes_peliculas(pila_trajes, ["Spider-Man: Homecoming", "Capitan America: Civil War"])
+
 
 
 
