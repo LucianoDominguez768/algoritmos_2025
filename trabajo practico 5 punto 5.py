@@ -37,13 +37,13 @@ personajes = [
 for nombre, es_villano in personajes:
     arbol.insert(nombre, {"is_villain": es_villano})
 
-# -------------------------------
+
 # b. Listar villanos ordenados alfabeticamente
 
 print("Villanos ordenados alfabeticamente:")
 arbol.villain_in_order()
 
-# -------------------------------
+
 # c. Mostrar todos los superheroes que empiezan con 'C'
 
 print("Superheroes que empiezan con 'C':")
@@ -56,13 +56,13 @@ def superheroes_starting_with_c(root):
 
 superheroes_starting_with_c(arbol.root)
 
-# -------------------------------
+
 # d. Determinar cuentos superheroes hay en el arbol
 
 total_heroes = arbol.count_heroes()
 print(f"Cantidad de superheroes: {total_heroes}")
 
-# -------------------------------
+
 # e. Corregir Doctor Strange usando busqueda por proximidad
 
 def correct_doctor_strange(root, correct_name):
@@ -78,7 +78,7 @@ correct_doctor_strange(arbol.root, "Doctor Strange (MCU)")
 print("Arbol despues de corregir Doctor Strange:")
 arbol.in_order()
 
-# -------------------------------
+
 # f. Listar superheroes ordenados de manera descendente
 
 print("Superheroes ordenados de manera descendente:")
@@ -91,7 +91,7 @@ def superheroes_descending(root):
 
 superheroes_descending(arbol.root)
 
-# -------------------------------
+
 # g. Generar un bosque: un arbol de heroes y otro de villanos
 
 arbol_heroes = BinaryTree()
