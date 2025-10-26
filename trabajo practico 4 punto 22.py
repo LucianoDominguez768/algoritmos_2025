@@ -147,20 +147,16 @@ padawans_mace = padawans("Mace Windu")
 
 print()
 print('H)')
-if padawans_qui:
-    print("Padawans de Qui-Gon Jin:")
-    if padawans_qui:
-        for padawan in padawans_qui:
-            print(padawan)
+if len(padawans_qui) > 0 :
+    
+    print(f"Padawans de Qui-Gon Jin:{padawans_qui}")
+    
 else:
     print("Qui-Gon Jin no tuvo padawans.")
 
-if padawans_mace:
-    print("Padawans de Mace Windu:")
-    if padawans_mace:
-        for padawan in padawans_mace:
-            print(padawan)
+if len(padawans_mace) > 0:
+    print(f"Padawans de Mace Windu: {padawans_mace}")
+    
 else:
     print("Mace Windu no tuvo padawans.")
-
 
