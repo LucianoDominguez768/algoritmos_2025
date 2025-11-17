@@ -3,7 +3,6 @@ from graph import Graph
 
 g = Graph(is_directed=False)
 
-
 nodos = {
     # PCs
     'Manjaro': 'pc',
@@ -192,3 +191,4 @@ switch1_a_mongodb()
 
 print("\n\n INCISO G ")
 mover_impresora()
+
