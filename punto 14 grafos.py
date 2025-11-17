@@ -3,7 +3,6 @@ from graph import Graph
 
 g = Graph(is_directed=False)
 
-
 ambientes = [
     "cocina", "comedor", "cochera", "quincho", "baño1", "baño2",
     "habitacion1", "habitacion2", "sala_estar", "terraza", "patio"
@@ -138,3 +137,4 @@ mst_total()
 
 print("\n INCISO D ")
 camino_h1_sala()
+
