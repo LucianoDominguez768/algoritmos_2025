@@ -1,9 +1,6 @@
 from graph import Graph
 
-# ================================================================
-# 1) Crear grafo y cargar personajes con los episodios en los que aparecen
-# ================================================================
-
+# 1 personajes y episodios
 g = Graph(is_directed=False)
 
 personajes = {
@@ -21,13 +18,13 @@ personajes = {
     "BB-8":           [7,8,9],
 }
 
-# Insertar vértices
+# vertices
 for p in personajes:
     g.insert_vertex(p)
     pos = g.search(p, 'value')
     g[pos].other_values = {"episodios": personajes[p]}
 
-# Insertar aristas (peso = episodios compartidos)
+# aristas 
 nombres = list(personajes.keys())
 
 for i in range(len(nombres)):
@@ -38,24 +35,20 @@ for i in range(len(nombres)):
         if compartidos > 0:
             g.insert_edge(p1, p2, compartidos)
 
-# ================================================================
-# 2) Árbol de expansión mínimo (Kruskal) desde 3 personajes
-# ================================================================
 
-print("\n=== Árbol de expansión mínimo desde C-3PO ===")
+#2 arbol de expansión minimo 
+print("\n arbol de expansión minimo desde C-3PO ")
 print(g.kruskal("C-3PO"))
 
-print("\n=== Árbol de expansión mínimo desde Yoda ===")
+print("\n arbol de expansión minimo desde Yoda ")
 print(g.kruskal("Yoda"))
 
-print("\n=== Árbol de expansión mínimo desde Leia ===")
+print("\n arbol de expansión minimo desde Leia ")
 print(g.kruskal("Leia"))
 
-# ================================================================
-# 3) Máximo número de episodios compartidos entre 2 personajes
-# ================================================================
 
-print("\n=== Máximo número de episodios compartidos ===")
+#3 numero de episodios compartidos entre 2 personajes
+print("\n Maximo número de episodios compartidos ")
 
 maximo = 0
 pares = []
@@ -69,17 +62,15 @@ for v in g:
         elif w == maximo:
             pares.append((v.value, e.value))
 
-print("Máximo:", maximo)
+print("Maximo:", maximo)
 print("Pares:")
 for a, b in pares:
     print("-", a, "<->", b)
 
-# ================================================================
-# 4) Camino más corto usando el DIJKSTRA de tu Graph.py
-# ================================================================
 
+#4 Camino mas corto 
 def camino_mas_corto(grafo, origen, destino):
-    print(f"\n=== Camino más corto de {origen} a {destino} ===")
+    print(f"\n Camino mas corto de {origen} a {destino} ")
 
     pila = grafo.dijkstra(origen)
     actual = destino
@@ -106,11 +97,10 @@ def camino_mas_corto(grafo, origen, destino):
 camino_mas_corto(g, "C-3PO", "R2-D2")
 camino_mas_corto(g, "Yoda", "Darth Vader")
 
-# ================================================================
-# 5) Personajes que aparecieron en los 9 episodios
-# ================================================================
 
-print("\n=== Personajes que aparecieron en los 9 episodios ===")
+#5 personajes que aparecieron en los 9 episodios
+print("\n Personajes que aparecieron en los 9 episodios ")
 for v in g:
     if len(v.other_values["episodios"]) == 9:
         print("-", v.value)
+
