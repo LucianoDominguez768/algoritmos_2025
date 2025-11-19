@@ -1,6 +1,5 @@
 from graph import Graph
 
-
 g = Graph(is_directed=False)
 
 ambientes = [
@@ -137,4 +136,5 @@ mst_total()
 
 print("\n INCISO D ")
 camino_h1_sala()
+
 
